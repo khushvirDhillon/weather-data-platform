@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.env
+
+*.duckdb
+*.duckdb.wal
+
+data/raw/
+
+weather_dbt/target/
+weather_dbt/logs/
+
+.DS_Store
+.vscode/
