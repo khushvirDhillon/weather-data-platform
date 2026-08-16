@@ -59,3 +59,17 @@ Happy modeling!
 [0m16:41:27.809085 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c31b520>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d291040>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d34bf10>]}
 [0m16:41:27.809419 [debug] [MainThread]: Flushing usage events
 [0m16:41:28.122146 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m17:22:55.934458 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c49b4c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d42d310>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d42d640>]}
+
+
+============================== 17:22:55.937845 | 17c837a7-5d40-498a-8dfb-acbd9321cf72 ==============================
+[0m17:22:55.937845 [info ] [MainThread]: Running with dbt=1.10.23
+[0m17:22:55.938281 [debug] [MainThread]: running dbt with arguments {'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'printer_width': '80', 'debug': 'False', 'target_path': 'None', 'fail_fast': 'False', 'profiles_dir': '/Users/khushvirdhillon/.dbt', 'static_parser': 'True', 'log_cache_events': 'False', 'send_anonymous_usage_stats': 'True', 'no_print': 'None', 'log_path': 'logs', 'indirect_selection': 'eager', 'cache_selected_only': 'False', 'quiet': 'False', 'warn_error': 'None', 'write_json': 'True', 'invocation_command': 'dbt init weather_dbt', 'log_format': 'default', 'empty': 'None', 'introspect': 'True', 'partial_parse': 'True'}
+[0m17:22:55.947634 [warn ] [MainThread]: [[33mWARNING[0m]: This version of dbt is deprecated and no longer receives regular patches, including for known bugs. Please upgrade to a newer supported version of dbt for new projects: https://docs.getdbt.com/docs/dbt-versions?utm_source=dbt-cli
+[0m17:22:55.948007 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecated_version_invocation', 'label': '17c837a7-5d40-498a-8dfb-acbd9321cf72', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d3e1220>]}
+[0m17:22:55.948681 [info ] [MainThread]: A project called weather_dbt already exists here.
+[0m17:22:55.950383 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 0.070510626, "process_in_blocks": "0", "process_kernel_time": 0.133118, "process_mem_max_rss": "99418112", "process_out_blocks": "0", "process_user_time": 0.827254}
+[0m17:22:55.950717 [debug] [MainThread]: Command `dbt init` succeeded at 17:22:55.950655 after 0.07 seconds
+[0m17:22:55.950964 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c49b4c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d3c9ca0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d3c9160>]}
+[0m17:22:55.951215 [debug] [MainThread]: Flushing usage events
+[0m17:22:56.356126 [debug] [MainThread]: An error was encountered while trying to flush usage events
