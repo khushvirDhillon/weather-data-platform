@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: main
+    tables:
+      - name: raw_observations
+      - name: raw_stations
+      - name: raw_inventory
+      - name: raw_countries
+      - name: configured_stations
