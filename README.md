@@ -191,12 +191,6 @@ Create a `.env` file at the repository root:
 GEMINI_API_KEY=your_api_key_here
 ```
 
-An example environment file can be provided as:
-
-```text
-.env.example
-```
-
 The actual `.env` file is excluded from Git.
 
 ---
@@ -224,7 +218,7 @@ After completing setup and configuring the Gemini API key, run the complete pipe
 ```bash
 python run_pipeline.py
 ```
-This command executes teh following steps:
+This command executes the following steps:
 
 ##  1 — Downloads NOAA data
 
@@ -234,7 +228,7 @@ This downloads:
 * station metadata
 * station inventory
 * country metadata
-* NOAA GHCN-Daily documentation
+* Readme documentation
 
 Existing files are not downloaded again, allowing the ingestion process to be rerun safely.
 
@@ -459,25 +453,11 @@ ghcnd-inventory.txt
 
 The inventory provides the available weather elements and the first/last year of unflagged data for each station.
 
-Therefore:
-
-```text
-Configuration
-      ↓
-Target Stations
-      ↓
-NOAA Inventory
-      ↓
-Valid Station + Element combinations
-      ↓
-Observations
-```
-
-Adding a station whose available elements differ from the existing stations does not require changing the element-selection SQL.
+Therefore, adding a station whose available elements differ from the existing stations does not require changing the element-selection SQL.
 
 ---
 
-# NOAA Data Dictionary Usage
+# NOAA Readme Usage
 
 The downloaded NOAA `readme.txt` is used as the source definition for interpreting weather measurements and source quality metadata.
 
@@ -498,14 +478,6 @@ Examples include:
 These definitions are represented as `element_metadata` and joined into the transformation pipeline.
 
 As a result, unit conversion is metadata-driven instead of repeated throughout dbt SQL.
-
-For example:
-
-```text
-raw TMAX = 253
-scale factor = 0.1
-normalized TMAX = 25.3 °C
-```
 
 ---
 
@@ -681,22 +653,6 @@ Calgary had a cold day with a high of -8.2°C and a low of -17.4°C, with no rec
 
 The narrative pipeline deliberately uses batches rather than making one API call per observation.
 
-Conceptually:
-
-```text
-mart_daily_weather
-       ↓
-Fetch next unprocessed batch
-       ↓
-Gemini API
-       ↓
-Structured response
-       ↓
-weather_narratives
-       ↓
-Repeat
-```
-
 The current batch size is configurable in the Python script.
 
 This reduces API overhead and satisfies the requirement to generate narratives in bulk.
@@ -801,7 +757,7 @@ A production implementation might use a cloud warehouse or lakehouse while prese
 
 ## LLM validation
 
-The narrative generator constrains Gemini through structured output and prompt rules, but it does not currently perform comprehensive semantic verification of every generated statement against the underlying source values.
+The narrative generator constrains Gemini through structured output and prompt rules, but it does not currently perform semantic verification of every generated statement against the underlying source values.
 
 ---
 
@@ -890,31 +846,9 @@ source .venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Download NOAA sources
-python ingestion/ingest.py
-
-# Load DuckDB
-python ingestion/load_duckdb.py
-
-# Transform and validate
-cd weather_dbt
-dbt run
-dbt test
-
-# Generate narratives
-cd ..
-python narratives/generate.py
+# run pipeline
+python run_pipeline.py
 ```
-
----
-
-# NOAA Dataset Citation
-
-The project uses the Global Historical Climatology Network - Daily dataset.
-
-Menne, M.J., I. Durre, B. Korzeniewski, S. McNeill, K. Thomas, X. Yin, S. Anthony, R. Ray, R.S. Vose, B.E. Gleason, and T.G. Houston. *Global Historical Climatology Network - Daily (GHCN-Daily), Version 3*. NOAA National Climatic Data Center.
-
-The project also references the GHCN-Daily methodology described by Menne et al. (2012), *Journal of Atmospheric and Oceanic Technology*, 29, 897–910.
 
 ---
 
