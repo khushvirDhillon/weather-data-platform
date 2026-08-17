@@ -92,10 +92,10 @@ Use ONLY the supplied NOAA-derived measurements.
 
 Rules:
 - Do not invent weather conditions.
-- Do not infer sunshine, clouds, storms, or other conditions unless the data explicitly supports them.
+- Do not invent sunshine, clouds, storms, or other conditions unless the data explicitly supports them.
 - Do not mention fields that are null.
 - Preserve the supplied city, station_id and observation_date exactly.
-- Write 1-2 sentences per record.
+- Write 2-3 sentences per record.
 - Temperatures are in Celsius.
 - Precipitation, snowfall, and snow depth are in millimetres.
 - Wind speed is metres per second.
@@ -155,7 +155,7 @@ def save_narratives(result):
     print(f"Saved {len(df)} narratives to DuckDB.")
 
 def main():
-    batch_size = 10
+    batch_size = 100
     ensure_narratives_table()
 
     while True:

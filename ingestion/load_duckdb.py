@@ -2,11 +2,9 @@ from pathlib import Path
 import gzip
 import csv
 from datetime import datetime
-
 import duckdb
 import pandas as pd
 import yaml
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = PROJECT_ROOT / "data" / "raw"
@@ -260,38 +258,6 @@ def write_to_duckdb():
     """)
 
     print("Tables created successfully.")
-
-    result = conn.execute("""
-        select 'raw_observations' as table_name,
-               count(*) as row_count
-        from raw_observations
-
-        union all
-
-        select 'raw_stations',
-               count(*)
-        from raw_stations
-
-        union all
-
-        select 'raw_inventory',
-               count(*)
-        from raw_inventory
-
-        union all
-
-        select 'raw_countries',
-               count(*)
-        from raw_countries
-
-        union all
-
-        select 'configured_stations',
-               count(*)
-        from configured_stations
-    """).fetchdf()
-
-    print(result)
 
     conn.close()
 

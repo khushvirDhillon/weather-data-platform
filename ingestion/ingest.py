@@ -2,14 +2,11 @@ from pathlib import Path
 import requests
 import yaml
 
-#BASE_URL = "https://www.ncei.noaa.gov/pub/data/ghcn/daily"
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = PROJECT_ROOT / "data" / "raw"
 CONFIG_PATH = PROJECT_ROOT / "config" / "config.yml"
 
 RAW_DIR.mkdir(parents=True, exist_ok=True)
-
 
 def load_config():
     with open(CONFIG_PATH, "r") as f:
