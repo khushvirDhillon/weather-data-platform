@@ -12,3 +12,5 @@ weather_dbt/logs/
 
 .DS_Store
 .vscode/
+
+logs
