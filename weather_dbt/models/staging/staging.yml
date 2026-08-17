@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: stg_observations
+    columns:
+      - name: station_id
+        tests:
+          - not_null
+
+      - name: observation_date
+        tests:
+          - not_null
+
+      - name: element
+        tests:
+          - not_null
+
+  - name: stg_stations
+    columns:
+      - name: station_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_inventory
+    columns:
+      - name: station_id
+        tests:
+          - not_null
+
+      - name: element
+        tests:
+          - not_null
+
+  - name: stg_configured_stations
+    columns:
+      - name: city
+        tests:
+          - not_null
+
+      - name: station_id
+        tests:
+          - not_null
+          - unique

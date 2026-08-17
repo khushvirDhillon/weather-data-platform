@@ -124,6 +124,69 @@ def load_countries():
 
     return pd.DataFrame(rows)
 
+def load_element_metadata():
+    return pd.DataFrame([
+        {
+            "element": "TMAX",
+            "description": "Maximum temperature",
+            "scale_factor": 0.1,
+            "unit": "C",
+        },
+        {
+            "element": "TMIN",
+            "description": "Minimum temperature",
+            "scale_factor": 0.1,
+            "unit": "C",
+        },
+        {
+            "element": "TAVG",
+            "description": "Average daily temperature",
+            "scale_factor": 0.1,
+            "unit": "C",
+        },
+        {
+            "element": "PRCP",
+            "description": "Precipitation",
+            "scale_factor": 0.1,
+            "unit": "mm",
+        },
+        {
+            "element": "SNOW",
+            "description": "Snowfall",
+            "scale_factor": 1.0,
+            "unit": "mm",
+        },
+        {
+            "element": "SNWD",
+            "description": "Snow depth",
+            "scale_factor": 1.0,
+            "unit": "mm",
+        },
+        {
+            "element": "AWND",
+            "description": "Average daily wind speed",
+            "scale_factor": 0.1,
+            "unit": "m/s",
+        },
+    ])
+
+def load_quality_flag_metadata():
+    return pd.DataFrame([
+        {"quality_flag": "D", "description": "failed duplicate check"},
+        {"quality_flag": "G", "description": "failed gap check"},
+        {"quality_flag": "I", "description": "failed internal consistency check"},
+        {"quality_flag": "K", "description": "failed streak/frequent-value check"},
+        {"quality_flag": "L", "description": "failed check on length of multiday period"},
+        {"quality_flag": "M", "description": "failed megaconsistency check"},
+        {"quality_flag": "N", "description": "failed naught check"},
+        {"quality_flag": "O", "description": "failed climatological outlier check"},
+        {"quality_flag": "R", "description": "failed lagged range check"},
+        {"quality_flag": "S", "description": "failed spatial consistency check"},
+        {"quality_flag": "T", "description": "failed temporal consistency check"},
+        {"quality_flag": "W", "description": "temperature too warm for snow"},
+        {"quality_flag": "X", "description": "failed bounds check"},
+        {"quality_flag": "Z", "description": "flagged by official Datzilla investigation"},
+    ])
 
 def load_station_config(config):
     return pd.DataFrame(config["stations"])
@@ -139,6 +202,8 @@ def write_to_duckdb():
     inventory = load_inventory()
     countries = load_countries()
     station_config = load_station_config(config)
+    element_metadata = load_element_metadata()
+    quality_flag_metadata = load_quality_flag_metadata()
 
     print("Connecting to DuckDB...")
 
@@ -149,6 +214,20 @@ def write_to_duckdb():
     conn.register("inventory_df", inventory)
     conn.register("countries_df", countries)
     conn.register("station_config_df", station_config)
+    conn.register("element_metadata_df", element_metadata)
+    conn.register("quality_flag_metadata_df", quality_flag_metadata)
+
+    conn.execute("""
+        create or replace table element_metadata as
+        select *
+        from element_metadata_df
+    """)
+
+    conn.execute("""
+        create or replace table quality_flag_metadata as
+        select *
+        from quality_flag_metadata_df
+    """)
 
     conn.execute("""
         create or replace table raw_observations as

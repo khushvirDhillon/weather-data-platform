@@ -1,8 +1,8 @@
 select
     station_id,
-    cast(latitude as double) as latitude,
-    cast(longitude as double) as longitude,
-    cast(elevation as double) as elevation,
+    try_cast(nullif(latitude, '') as double) as latitude,
+    try_cast(nullif(longitude, '') as double) as longitude,
+    try_cast(nullif(elevation, '') as double) as elevation,
     nullif(state, '') as province,
     station_name,
     nullif(gsn_flag, '') as gsn_flag,

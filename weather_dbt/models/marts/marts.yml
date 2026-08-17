@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: mart_daily_weather
+    columns:
+      - name: city
+        tests:
+          - not_null
+
+      - name: station_id
+        tests:
+          - not_null
+
+      - name: observation_date
+        tests:
+          - not_null

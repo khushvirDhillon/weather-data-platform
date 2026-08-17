@@ -9,3 +9,5 @@ sources:
       - name: raw_inventory
       - name: raw_countries
       - name: configured_stations
+      - name: element_metadata
+      - name: quality_flag_metadata

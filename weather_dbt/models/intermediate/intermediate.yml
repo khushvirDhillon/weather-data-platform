@@ -1,0 +1,55 @@
+version: 2
+
+models:
+
+  - name: int_target_stations
+    columns:
+      - name: city
+        tests:
+          - not_null
+
+      - name: station_id
+        tests:
+          - not_null
+          - unique
+
+      - name: station_name
+        tests:
+          - not_null
+
+
+  - name: int_station_elements
+    columns:
+      - name: station_id
+        tests:
+          - not_null
+
+      - name: element
+        tests:
+          - not_null
+
+  - name: int_weather_observations
+    columns:
+      - name: city
+        tests:
+          - not_null
+
+      - name: station_id
+        tests:
+          - not_null
+
+      - name: observation_date
+        tests:
+          - not_null
+
+      - name: element
+        tests:
+          - not_null
+
+      - name: raw_value
+        tests:
+          - not_null
+
+      - name: is_quality_valid
+        tests:
+          - not_null
