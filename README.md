@@ -74,41 +74,6 @@ The solution is designed to be reproducible, metadata-driven, and extensible wit
 * **YAML** — pipeline configuration
 * **Git / GitHub** — version control and delivery
 
----
-
-## Repository Structure
-
-```text
-weather-data-platform/
-│
-├── config/
-│   └── config.yml
-│
-├── data/
-│   └── raw/
-│
-├── ingestion/
-│   ├── ingest.py
-│   └── load_duckdb.py
-│
-├── narratives/
-│   └── generate.py
-│
-├── weather_dbt/
-│   ├── dbt_project.yml
-│   ├── models/
-│   │   ├── staging/
-│   │   ├── intermediate/
-│   │   └── marts/
-│   └── tests/
-│
-├── .env.example
-├── .gitignore
-├── requirements.txt
-└── README.md
-```
-
-Generated data, local DuckDB files, downloaded NOAA source files, and API secrets are intentionally excluded from version control.
 
 ---
 
@@ -244,28 +209,6 @@ Pipeline scope is controlled through:
 config/config.yml
 ```
 
-Example:
-
-```yaml
-start_date: "2024-01-01"
-end_date: "2025-12-31"
-
-stations:
-  - city: Toronto
-    station_id: CA006158731
-
-  - city: Montreal
-    station_id: CA007025251
-
-  - city: Vancouver
-    station_id: CA001108395
-
-  - city: Calgary
-    station_id: CA003031092
-
-  - city: Ottawa
-    station_id: CA006106001
-```
 
 Station IDs are stored in configuration rather than embedded in transformation SQL.
 
@@ -273,15 +216,17 @@ Adding another configured station does not require changes to the dbt SQL models
 
 ---
 
-# Running the Pipeline
 
-Run all commands from the repository root unless otherwise noted.
+## Running the Pipeline
 
-## Step 1 — Download NOAA data
+After completing setup and configuring the Gemini API key, run the complete pipeline from the repository root:
 
 ```bash
-python ingestion/ingest.py
+python run_pipeline.py
 ```
+This command executes teh following steps:
+
+##  1 — Downloads NOAA data
 
 This downloads:
 
@@ -295,11 +240,7 @@ Existing files are not downloaded again, allowing the ingestion process to be re
 
 ---
 
-## Step 2 — Load DuckDB
-
-```bash
-python ingestion/load_duckdb.py
-```
+## 2 — Load DuckDB
 
 This creates the local DuckDB database:
 
@@ -321,12 +262,7 @@ quality_flag_metadata
 
 ---
 
-## Step 3 — Run dbt transformations
-
-```bash
-cd weather_dbt
-dbt run
-```
+## 3 — Run dbt transformations
 
 The dbt project follows three transformation layers:
 
@@ -338,24 +274,19 @@ intermediate
 marts
 ```
 
----
-
-## Step 4 — Run data-quality tests
-
-```bash
-dbt test
-```
+This steps runs all the transformations to create these layers.
 
 ---
 
-## Step 5 — Generate weather narratives
+## 4 — Run data-quality tests
 
-Return to the repository root:
+Run data quality tests before providing the data to Gemini.
 
-```bash
-cd ..
-python narratives/generate.py
-```
+---
+
+## 5 — Generate weather narratives
+
+Creates the narratives from mart data.
 
 The narrative pipeline:
 
